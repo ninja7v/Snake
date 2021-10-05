@@ -347,35 +347,37 @@ var	tab1:tabt1;
 	K:TKeyEvent;
 
 begin
-clrscr;
-couleur:='w';
-sens:=droite;
-initialisationgrille(l,tab1,tab2,sens,posx,posy);
-affichagegrille(tab1,couleur);
-writeln('');
-writeln('Le but est de grandir le plus possible en attrapant les points.');
-writeln('Attention à ne pas rentrer dans les murs !');
-writeln('Tu peux mettre PAUSE en apuyant sur n importe quelle touche.');
-writeln('');
-writeln('Menu [ ]');
-writeln('Exit [ ]');
-writeln('');
-writeln('Touche ESPACE pour selectioner.');
-pos:=wherey;
-gotoxy(7,pos-4);
-c:=1;
-InitKeyBoard();
-repeat
-K:=GetKeyEvent();
-K:=TranslateKeyEvent(K);
-if ((KeyEventToString(K) = 'Up') and (wherey>pos-4)) then	GotoXY(7,wherey-1);
-if ((KeyEventToString(K) = 'Down') and (wherey<pos-3))then	GotoXY(7,wherey+1);
-c:=wherey;
-until (KeyEventToString(K) = ' ');
-
-DoneKeyBoard();
-if (c=pos-4) then retour:=0;
-if (c=pos-3) then retour:=1;
+	clrscr;
+	couleur:='w';
+	sens:=droite;
+	initialisationgrille(l,tab1,tab2,sens,posx,posy);
+	affichagegrille(tab1,couleur);
+	writeln('');
+	writeln('Le but est de grandir le plus possible en attrapant les points.');
+	writeln('Attention à ne pas rentrer dans les murs !');
+	writeln('Tu peux mettre PAUSE en apuyant sur n importe quelle touche.');
+	writeln('');
+	writeln('Menu [ ]');
+	writeln('Exit [ ]');
+	writeln('');
+	writeln('Touche ESPACE pour selectioner.');
+	pos:=wherey;
+	gotoxy(7,pos-4);
+	c:=1;
+	InitKeyBoard();
+	repeat
+		K:=GetKeyEvent();
+		K:=TranslateKeyEvent(K);
+		if ((KeyEventToString(K) = 'Up') and (wherey>pos-4)) then
+			GotoXY(7,wherey-1);
+		if ((KeyEventToString(K) = 'Down') and (wherey<pos-3))then
+			GotoXY(7,wherey+1);
+		c:=wherey;
+	until (KeyEventToString(K) = ' ');
+	
+	DoneKeyBoard();
+	if (c=pos-4) then retour:=0;
+	if (c=pos-3) then retour:=1;
 end;
 
 //saving score
