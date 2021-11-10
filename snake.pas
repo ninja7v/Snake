@@ -311,9 +311,9 @@ Begin
 	writeln('SNAKE by Luc PREVOST');
 	writeln('');
 	{Choices list}
-	writeln('Play  [ ]');
+	writeln('Play   [ ]');
 	writeln('Scores [ ]');
-	writeln('Rules [ ]');
+	writeln('Rules  [ ]');
 	writeln('');
 	writeln('*Type SPACE BAR to select*');
 	gotoxy(9,3);
@@ -355,6 +355,7 @@ begin
 	writeln('');
 	writeln('The purpose is to grow as much as possible catching fruits.');
 	writeln('Be carefull to the walls !');
+	writeln('The higher the level, the higher the number of wall.');
 	writeln('To pause the game, just press any key.');
 	writeln('');
 	writeln('Menu [ ]');
@@ -392,9 +393,9 @@ begin
 	if (lvl>minlvl-1) and (lvl<maxlvl+1) then
 	begin
 		{Creation of the score file}
-		if not(FileExists('scores_snake')) then
+		if not(FileExists('scores_snake.txt')) then
 		begin
-			assign(classement, 'scores_snake');
+			assign(classement, 'scores_snake.txt');
 			rewrite(classement);
 			
 			for i:=1 to maxse do
@@ -407,7 +408,7 @@ begin
 				close(classement);
 	end;
 	
-	assign(classement, 'scores_snake');
+	assign(classement, 'scores_snake.txt');
 	reset(classement);
 	Read(classement, tabscore);
 	
@@ -443,7 +444,7 @@ var classement:file of score1;
 	tabscore:score1;
 Begin
 	clrscr;
-	assign(classement, 'scores_snake');
+	assign(classement, 'scores_snake.txt');
 	reset(classement);
 	Read(classement, tabscore);
 	
