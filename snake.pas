@@ -1,11 +1,11 @@
 program snake;
 
-uses crt {couleur,goto}, keyboard {lire une touche}, dos {temps}, sysutils {fichier};
+uses crt {color,goto}, keyboard {read input}, dos {time}, sysutils {file};
 
 const largeurmax=13;
 	hauteurmax=13;
 	proportionmur=10;
-	maxse=3; {max score enregistés}
+	maxse=3; {max saved score}
 	minlvl=0;
 	maxlvl=7;
 
@@ -19,7 +19,7 @@ Type score1=record
 	scorenbr:array[minlvl..maxlvl,1..maxse] of integer;
 end;
 
-//choose level
+// Choose level
 procedure choixniveau(var lvl:integer);
 
 begin
@@ -41,7 +41,7 @@ begin
 	until ((lvl>-1) and (lvl<maxlvl+1));
 end;
 
-//chose color
+// Chose color
 procedure choixcouleur(var couleur:char);
 
 var c:integer;
@@ -49,12 +49,12 @@ var c:integer;
 
 begin
 	InitKeyBoard();
-	writeln('Choisisez votre couleur :');
+	writeln('Choose your color :');
 	writeln('');
-	writeln('Blanc [ ]');
-	writeln('Bleu  [ ]');
+	writeln('White [ ]');
+	writeln('Blue  [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	gotoxy(8,3);
 	c:=1;
 	
@@ -72,7 +72,7 @@ begin
 	if c=4 then couleur:='b';
 end;
 
-//initialise grid
+// Initialise grid
 procedure initialisationgrille(lvl:integer; var tab1:tabt1; var tab2:tabt2; var sens:senst; var posx,posy:integer);
 
 var i,j,x,y:integer;
@@ -81,13 +81,13 @@ begin
 	posx:=largeurmax div 2; 
 	posy:=hauteurmax div 2;
 	
-	randomize; {2 et -1 pour ne pas avoir de mur sur les bords}
+	randomize; {2 et -1 to not having wall on edges}
 	if lvl<>0 then
 	begin
 		for i:=2 to hauteurmax-1 do
 			for j:=2 to largeurmax-1 do
 			begin
-				x:=random(proportionmur-lvl); {0:serpent; 1:rien; 2:mur; 3:fruit}
+				x:=random(proportionmur-lvl); {0:snake; 1:void; 2:wall; 3:fruit}
 				if ((x=2) and (i<>2) and (i<>largeurmax-1) and (j<>2) and (j<>hauteurmax-1)) then
 					tab1[i,j]:=2
 				else tab1[i,j]:=1;
@@ -100,7 +100,7 @@ begin
 				tab1[i,j]:=1;
 	end;
 	
-	for i:=1 to hauteurmax do {pour le cadre}
+	for i:=1 to hauteurmax do {Frame}
 	begin
 		tab1[1,i]:=2;
 		tab1[largeurmax,i]:=2;
@@ -108,19 +108,19 @@ begin
 		tab1[i,hauteurmax]:=2;
 	end;
 	
-	tab2[1,1]:=posx; {pour le snake}
+	tab2[1,1]:=posx; {Snake}
 	tab2[2,1]:=posy;
 	tab2[1,2]:=posx-1;
 	tab2[2,2]:=posy;
 	tab1[posx-1,posy]:=0;
 	tab1[posx,posy]:=0;
 	
-	for i:=posx+1 to largeurmax-1 do {pour la ligne sans murs}
+	for i:=posx+1 to largeurmax-1 do {For the line without wall}
 	begin
 		tab1[i,posy]:=1;
 	end;
 	
-	repeat {pour le fruit}	{0:serpent; 1:rien; 2:mur; 3:fruit}
+	repeat {Fruit}	{0:snake; 1:void; 2:wall; 3:fruit}
 		x:=random(largeurmax-3)+2;
 		y:=random(hauteurmax-3)+2;
 		if tab1[x,y]=1 then tab1[x,y]:=3;
@@ -129,7 +129,7 @@ begin
 	sens:=droite;
 end;
 
-//displqy grid
+// Display grid
 procedure affichagegrille(tab1:tabt1; couleur:char);
 
 var col,lin:integer;
@@ -148,7 +148,7 @@ begin
 	end;
 end;
 
-//displacement
+// Displacement
 procedure deplacement(var sens:senst; var posx,posy,score:integer; var tab1:tabt1; var tab2:tabt2; var victoire:boolean);
 
 var score1,x,y:integer;
@@ -158,7 +158,7 @@ begin
 	randomize;
 	score1:=score;
 	InitKeyBoard();
-	delay(5); {obligatoire pour que la procedure soit prise en compte dans la boucle repeat dans jeu}
+	delay(5); {to take the procedure into acount in the 'repeat' loop}
 	if keypressed then 
 		repeat
 			K:=GetKeyEvent();
@@ -227,17 +227,17 @@ begin
 		repeat
 			x:=random(largeurmax-3)+2;
 			y:=random(hauteurmax-3)+2;
-			if tab1[x,y]=1 then tab1[x,y]:=3; {0:serpent; 1:rien; 2:mur; 3:fruit}
+			if tab1[x,y]=1 then tab1[x,y]:=3; {0:snake; 1:void; 2:wall; 3:fruit}
 		until tab1[x,y]=3;
 	end;
 end;
 
-//displacement snake
+// Displacement snake
 procedure depacementsnake(var posx,posy,score:integer; sens:senst; var tab1:tabt1; var tab2:tabt2; var victoire:boolean);
 
 var i,x,y,score1:integer;
 
-begin {0:serpent; 1:rien; 2:mur; 3:fruit}
+begin {0:snake; 1:void; 2:wall; 3:fruit}
 	randomize;
 	score1:=score;
 	
@@ -288,7 +288,7 @@ begin {0:serpent; 1:rien; 2:mur; 3:fruit}
 		repeat
 		x:=random(largeurmax-3)+2;
 		y:=random(hauteurmax-3)+2;
-		if tab1[x,y]=1 then tab1[x,y]:=3; {0:serpent; 1:rien; 2:mur; 3:fruit}
+		if tab1[x,y]=1 then tab1[x,y]:=3; {0:snake; 1:void; 2:wall; 3:fruit}
 		until tab1[x,y]=3;
 	end;
 	
@@ -296,7 +296,7 @@ begin {0:serpent; 1:rien; 2:mur; 3:fruit}
 		tab1[tab2[1,i],tab2[2,i]]:=0;
 end;
 
-//menu
+// Menu
 procedure menu(var gojeu,goscore,goregles:boolean);
 
 var c:integer;
@@ -308,14 +308,14 @@ Begin
 	goscore:=false;
 	goregles:=false;
 	
-	writeln('SNAKE par NINJA7V');
+	writeln('SNAKE by Luc PREVOST');
 	writeln('');
-	{liste des choix}
-	writeln('Jouer  [ ]');
+	{Choices list}
+	writeln('Play  [ ]');
 	writeln('Scores [ ]');
-	writeln('Regles [ ]');
+	writeln('Rules [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	gotoxy(9,3);
 	c:=1;
 	
@@ -353,14 +353,14 @@ begin
 	initialisationgrille(l,tab1,tab2,sens,posx,posy);
 	affichagegrille(tab1,couleur);
 	writeln('');
-	writeln('Le but est de grandir le plus possible en attrapant les points.');
-	writeln('Attention à ne pas rentrer dans les murs !');
-	writeln('Tu peux mettre PAUSE en apuyant sur n importe quelle touche.');
+	writeln('The purpose is to grow as much as possible catching fruits.');
+	writeln('Be carefull to the walls !');
+	writeln('To pause the game, just press any key.');
 	writeln('');
 	writeln('Menu [ ]');
 	writeln('Exit [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
 	gotoxy(7,pos-4);
 	c:=1;
@@ -380,7 +380,7 @@ begin
 	if (c=pos-3) then retour:=1;
 end;
 
-//saving score
+// Save score
 procedure enregistrementscore(lvl,score:integer); 
 
 var tabscore:score1;
@@ -391,10 +391,10 @@ var tabscore:score1;
 begin
 	if (lvl>minlvl-1) and (lvl<maxlvl+1) then
 	begin
-		{creation du fichier score}
-		if not(FileExists('fichierscoresnake')) then
+		{Creation of the score file}
+		if not(FileExists('scores_snake')) then
 		begin
-			assign(classement, 'fichierscoresnake');
+			assign(classement, 'scores_snake');
 			rewrite(classement);
 			
 			for i:=1 to maxse do
@@ -407,7 +407,7 @@ begin
 				close(classement);
 	end;
 	
-	assign(classement, 'fichierscoresnake');
+	assign(classement, 'scores_snake');
 	reset(classement);
 	Read(classement, tabscore);
 	
@@ -434,7 +434,7 @@ begin
 	end;
 End;
 
-//display scores
+// Display scores
 procedure affichagescores(var lvl:integer);
 
 var classement:file of score1;
@@ -443,7 +443,7 @@ var classement:file of score1;
 	tabscore:score1;
 Begin
 	clrscr;
-	assign(classement, 'fichierscoresnake');
+	assign(classement, 'scores_snake');
 	reset(classement);
 	Read(classement, tabscore);
 	
@@ -467,12 +467,12 @@ Begin
 	
 	writeln('');
 	writeln('');
-	{list of differents choices}
+	{Choices list}
 	writeln('Reset score [ ]');
 	writeln('Menu        [ ]');
 	writeln('Exit        [ ]');
 	writeln('');
-	writeln('Press SPACEBAR to select.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
 	gotoxy(14,wherey-5);
 	c:=1;
@@ -490,7 +490,7 @@ Begin
 	DoneKeyBoard();
 	if (c=pos-5) then
 	begin
-		assign(classement, 'fichierscoresnake');
+		assign(classement, 'scores_snake');
 		reset(classement);
 		rewrite(classement);
 		for i:=1 to maxse do
@@ -507,7 +507,7 @@ Begin
 	if (c=pos-4) then lvl:=1;
 End;
 
-//game
+// Game
 procedure jeu(var tab1:tabt1; var tab2:tabt2; var score,retour:integer; var victoire:boolean);
 
 var lvl,posx,posy,pos,c1,score1:integer;
@@ -553,7 +553,7 @@ begin
 	writeln('Menu [ ]');
 	writeln('Exit [ ]');
 	writeln('');
-	writeln('Touche ESPACE pour selectioner.');
+	writeln('*Type SPACE BAR to select*');
 	pos:=wherey;
 	gotoxy(7,pos-4);
 	c1:=pos-4;
@@ -572,7 +572,7 @@ begin
 end;
 
 
-//main program
+// Main
 var tab1:tabt1;
 	tab2:tabt2;
 	gojeu,goscore,goregles,victoire:boolean;
