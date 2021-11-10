@@ -1,3 +1,4 @@
+// Snake coded in Pascal by Luc PREVOST, 2017
 program snake;
 
 uses crt {color,goto}, keyboard {read input}, dos {time}, sysutils {file};
