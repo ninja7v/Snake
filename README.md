@@ -13,7 +13,7 @@ Snake uses the folowing Pascal units:
 - [Keyboard](https://www.freepascal.org/docs-html/rtl/keyboard/index.html)
 - [Sysutils](https://www.freepascal.org/docs-html/rtl/sysutils/index.html)
 
-To execute it, compile the snake.pas file and run it. After launching the program, a terminal windows pops up.
+To execute it, compile the "snake.pas" file and run it. After launching the program, a terminal windows pops up.
 
 ## ⚙️Menu
 ![snake_menu](https://user-images.githubusercontent.com/52052772/141106612-e06bef9a-58d9-4ce5-b823-2e0de5b141e7.png)
