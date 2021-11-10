@@ -1,6 +1,6 @@
 # 🐍 Snake
 
-Snake coded in Python by Luc PREVOST.
+Snake coded in Pascal by Luc PREVOST.
 
 ![snake_play](https://user-images.githubusercontent.com/52052772/141104260-b8f67b21-0dbb-449d-9ad5-0b7d5116273c.png)
 
