@@ -1,4 +1,4 @@
-# Snake
+# 🐍 Snake
 
 Snake coded in Python by Luc PREVOST.
 
