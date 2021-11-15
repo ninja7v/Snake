@@ -18,7 +18,7 @@ To execute it, compile the _snake.pas_ file and run it. After launching the prog
 ## ⚙️Menu
 ![snake_menu](https://user-images.githubusercontent.com/52052772/141106612-e06bef9a-58d9-4ce5-b823-2e0de5b141e7.png)
 
-Everything happens in the terminal. Select the option you want using ↑ and ↓ arrows (or '8' and '2' keys if the VERR NUM buton is desactivated), then press **SPACE BAR** to validate. Any other key won't do anything.
+Everything happens in the terminal. Select the option you want using ↑ and ↓ arrows (or '8' and '2' keys if the **VERR NUM** buton is desactivated), then press **SPACE BAR** to validate. Any other key won't do anything.
 
 ## 📏 Rules
 ![snake_rules](https://user-images.githubusercontent.com/52052772/141109745-06cf3edf-71a6-4b50-b5e3-e2e59b17b1b4.png)
